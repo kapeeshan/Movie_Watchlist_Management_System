@@ -1,0 +1,242 @@
+.Shell {
+  min-height: 100vh;
+  background: radial-gradient(1200px 600px at 10% 0%, rgba(99, 102, 241, 0.18), transparent 55%),
+    radial-gradient(900px 500px at 90% 10%, rgba(16, 185, 129, 0.16), transparent 55%),
+    #0b1020;
+  color: #e7eaff;
+}
+
+.Topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(11, 16, 32, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.Brand {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 18px 16px;
+}
+
+.Brand-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.Brand-subtitle {
+  margin-top: 4px;
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+.Main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 18px 16px 56px;
+  display: grid;
+  gap: 16px;
+}
+
+.Card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.Card-title {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.Card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.Form {
+  display: grid;
+  gap: 12px;
+}
+
+.Grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .Grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.Field {
+  display: grid;
+  gap: 6px;
+}
+
+.Field--span2 {
+  grid-column: span 2;
+}
+
+@media (max-width: 720px) {
+  .Field--span2 {
+    grid-column: auto;
+  }
+}
+
+.Field-label {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+input,
+select {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e7eaff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+}
+
+input::placeholder {
+  color: rgba(231, 234, 255, 0.55);
+}
+
+input:focus,
+select:focus {
+  border-color: rgba(99, 102, 241, 0.7);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.18);
+}
+
+.Form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.Button {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  color: #e7eaff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.Button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.Button--ghost {
+  background: transparent;
+}
+
+.Button--danger {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.Filters {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.Input {
+  min-width: 220px;
+}
+
+.Alert {
+  margin-top: 10px;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.12);
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+.Empty {
+  padding: 16px 8px;
+  opacity: 0.85;
+}
+
+.List {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  display: grid;
+  gap: 10px;
+}
+
+.Item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.Item-title {
+  font-weight: 700;
+}
+
+.Item-meta {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  align-items: center;
+  opacity: 0.92;
+  font-size: 13px;
+}
+
+.Item-muted {
+  opacity: 0.75;
+}
+
+.Item-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.Pill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  text-transform: capitalize;
+}
+
+.Pill--planned {
+  border-color: rgba(99, 102, 241, 0.55);
+  background: rgba(99, 102, 241, 0.14);
+}
+
+.Pill--watching {
+  border-color: rgba(245, 158, 11, 0.55);
+  background: rgba(245, 158, 11, 0.14);
+}
+
+.Pill--completed {
+  border-color: rgba(16, 185, 129, 0.55);
+  background: rgba(16, 185, 129, 0.14);
+}
