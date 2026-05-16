@@ -18,6 +18,7 @@ function getNumberEnv(name, fallback) {
 module.exports = {
   PORT: getNumberEnv("PORT", 5000),
   MONGODB_URI: getRequiredEnv("MONGODB_URI"),
-  CORS_ORIGIN: process.env.CORS_ORIGIN || "http://localhost:3000"
+  CORS_ORIGIN: process.env.CORS_ORIGIN || "http://localhost:3000",
+  JWT_SECRET: getRequiredEnv("JWT_SECRET"),
+  JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || "7d"
 };
-

@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const MovieSchema = new mongoose.Schema(
   {
+    list: { type: mongoose.Schema.Types.ObjectId, ref: "Watchlist", required: true, index: true },
     title: { type: String, required: true, trim: true },
     year: { type: Number, min: 1800, max: 3000 },
     genre: { type: String, trim: true },
@@ -17,4 +18,3 @@ const MovieSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Movie", MovieSchema);
-

@@ -15,10 +15,52 @@
   backdrop-filter: blur(10px);
 }
 
-.Brand {
+.Topbar-inner {
   max-width: 980px;
   margin: 0 auto;
   padding: 18px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.Brand {
+  padding: 0;
+}
+
+.Auth {
+  max-width: 420px;
+  margin: 48px auto;
+  padding: 0 16px;
+}
+
+.Auth-card {
+  margin: 0;
+}
+
+.Auth-loading {
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.List-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.List-form input {
+  flex: 1;
+  min-width: 180px;
+}
+
+.List-picker {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .Brand-title {

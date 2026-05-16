@@ -27,13 +27,30 @@ npm run dev
 
 The API will run at `http://localhost:5000`.
 
+### Environment variables
+Copy `backend/.env.example` to `backend/.env` and set at least:
+- `MONGODB_URI`
+- `JWT_SECRET` (long random string for signing tokens)
+
 ### API endpoints
+
+**Public**
 - `GET /api/health`
-- `GET /api/movies`
-- `POST /api/movies`
-- `GET /api/movies/:id`
-- `PATCH /api/movies/:id`
-- `DELETE /api/movies/:id`
+- `POST /api/auth/register` — create account (returns JWT)
+- `POST /api/auth/login` — sign in (returns JWT)
+
+**Protected** (send `Authorization: Bearer <token>`)
+- `GET /api/auth/me`
+- `GET /api/lists` — user's watchlists
+- `POST /api/lists`
+- `GET /api/lists/:listId`
+- `PATCH /api/lists/:listId`
+- `DELETE /api/lists/:listId`
+- `GET /api/lists/:listId/movies`
+- `POST /api/lists/:listId/movies`
+- `GET /api/lists/:listId/movies/:id`
+- `PATCH /api/lists/:listId/movies/:id`
+- `DELETE /api/lists/:listId/movies/:id`
 
 ## Frontend setup (React)
 
