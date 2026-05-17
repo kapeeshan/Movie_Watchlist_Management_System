@@ -4,30 +4,127 @@
     "name": "Movie Watchlist API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+  },
   "item": [
     {
       "name": "Health",
       "request": {
+        "auth": { "type": "noauth" },
         "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/health",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "health"]
+        "url": "{{baseUrl}}/api/health"
+      }
+    },
+    {
+      "name": "Auth - Register",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"secret12\",\n  \"displayName\": \"Test User\"\n}"
+        },
+        "url": "{{baseUrl}}/api/auth/register"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json?.data?.token) pm.collectionVariables.set('token', json.data.token);",
+              "if (json?.data?.user?._id) pm.collectionVariables.set('userId', json.data.user._id);"
+            ]
+          }
         }
+      ]
+    },
+    {
+      "name": "Auth - Login",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"secret12\"\n}"
+        },
+        "url": "{{baseUrl}}/api/auth/login"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json?.data?.token) pm.collectionVariables.set('token', json.data.token);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth - Me",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/auth/me" }
+    },
+    {
+      "name": "Lists - List",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/lists" },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "const first = json?.data?.[0];",
+              "if (first?._id) pm.collectionVariables.set('listId', first._id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lists - Create",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Weekend Queue\",\n  \"description\": \"Movies to watch\"\n}"
+        },
+        "url": "{{baseUrl}}/api/lists"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json?.data?._id) pm.collectionVariables.set('listId', json.data._id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lists - Get by ID",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/lists/{{listId}}" }
+    },
+    {
+      "name": "Lists - Patch",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"description\": \"Updated\"\n}" },
+        "url": "{{baseUrl}}/api/lists/{{listId}}"
       }
     },
     {
       "name": "Movies - List",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/movies",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "movies"]
-        }
-      }
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/lists/{{listId}}/movies" }
     },
     {
       "name": "Movies - Create",
@@ -38,28 +135,15 @@
           "mode": "raw",
           "raw": "{\n  \"title\": \"Inception\",\n  \"year\": 2010,\n  \"genre\": \"Sci-Fi\",\n  \"rating\": 8.8,\n  \"status\": \"planned\",\n  \"notes\": \"Watch again\"\n}"
         },
-        "url": {
-          "raw": "{{baseUrl}}/api/movies",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "movies"]
-        }
+        "url": "{{baseUrl}}/api/lists/{{listId}}/movies"
       },
       "event": [
         {
           "listen": "test",
           "script": {
-            "type": "text/javascript",
             "exec": [
-              "pm.test('created', function () {",
-              "  pm.response.to.have.status(201);",
-              "});",
-              "",
-              "try {",
-              "  const json = pm.response.json();",
-              "  if (json && json.data && json.data._id) {",
-              "    pm.collectionVariables.set('movieId', json.data._id);",
-              "  }",
-              "} catch (e) {}"
+              "const json = pm.response.json();",
+              "if (json?.data?._id) pm.collectionVariables.set('movieId', json.data._id);"
             ]
           }
         }
@@ -67,15 +151,7 @@
     },
     {
       "name": "Movies - Get by ID",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/movies/{{movieId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "movies", "{{movieId}}"]
-        }
-      }
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/lists/{{listId}}/movies/{{movieId}}" }
     },
     {
       "name": "Movies - Patch",
@@ -83,29 +159,23 @@
         "method": "PATCH",
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": { "mode": "raw", "raw": "{\n  \"status\": \"watching\"\n}" },
-        "url": {
-          "raw": "{{baseUrl}}/api/movies/{{movieId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "movies", "{{movieId}}"]
-        }
+        "url": "{{baseUrl}}/api/lists/{{listId}}/movies/{{movieId}}"
       }
     },
     {
       "name": "Movies - Delete",
-      "request": {
-        "method": "DELETE",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/movies/{{movieId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "movies", "{{movieId}}"]
-        }
-      }
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/api/lists/{{listId}}/movies/{{movieId}}" }
+    },
+    {
+      "name": "Lists - Delete",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/api/lists/{{listId}}" }
     }
   ],
   "variable": [
     { "key": "baseUrl", "value": "http://localhost:5000" },
-    { "key": "movieId", "value": "" }
+    { "key": "token", "value": "" },
+    { "key": "listId", "value": "" },
+    { "key": "movieId", "value": "" },
+    { "key": "userId", "value": "" }
   ]
 }
-
