@@ -1,0 +1,5 @@
+$kind: http-request
+name: "{{url}}/api/lists"
+url: "{{url}}/api/lists"
+method: GET
+order: 4236591287887171
