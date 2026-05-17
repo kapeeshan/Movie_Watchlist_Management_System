@@ -1,0 +1,9 @@
+# Use this workspace to collaborate
+workspace:
+  id: 48f173d2-d5b6-4274-842c-2641a75c54e6
+
+localResources:
+  collections:
+    - ..\MovieWatchlist.postman_collection.json
+  environments:
+    - ..\MovieWatchlist.postman_environment.json

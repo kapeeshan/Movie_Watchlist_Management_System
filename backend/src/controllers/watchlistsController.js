@@ -36,12 +36,12 @@ async function createWatchlist(req, res, next) {
 
 async function getWatchlist(req, res, next) {
   try {
-    const { id } = req.params;
-    if (!isValidObjectId(id)) {
+    const { listId } = req.params;
+    if (!isValidObjectId(listId)) {
       return res.status(400).json({ error: { message: "Invalid list id" } });
     }
 
-    const list = await Watchlist.findOne({ _id: id, user: req.user._id }).lean();
+    const list = await Watchlist.findOne({ _id: listId, user: req.user._id }).lean();
     if (!list) return res.status(404).json({ error: { message: "List not found" } });
     res.json({ data: list });
   } catch (err) {
@@ -51,8 +51,8 @@ async function getWatchlist(req, res, next) {
 
 async function updateWatchlist(req, res, next) {
   try {
-    const { id } = req.params;
-    if (!isValidObjectId(id)) {
+    const { listId } = req.params;
+    if (!isValidObjectId(listId)) {
       return res.status(400).json({ error: { message: "Invalid list id" } });
     }
 
@@ -67,7 +67,7 @@ async function updateWatchlist(req, res, next) {
     }
     if (description !== undefined) patch.description = description?.trim() || "";
 
-    const updated = await Watchlist.findOneAndUpdate({ _id: id, user: req.user._id }, patch, {
+    const updated = await Watchlist.findOneAndUpdate({ _id: listId, user: req.user._id }, patch, {
       new: true,
       runValidators: true
     });
@@ -85,15 +85,15 @@ async function updateWatchlist(req, res, next) {
 
 async function deleteWatchlist(req, res, next) {
   try {
-    const { id } = req.params;
-    if (!isValidObjectId(id)) {
+    const { listId } = req.params;
+    if (!isValidObjectId(listId)) {
       return res.status(400).json({ error: { message: "Invalid list id" } });
     }
 
-    const deleted = await Watchlist.findOneAndDelete({ _id: id, user: req.user._id });
+    const deleted = await Watchlist.findOneAndDelete({ _id: listId, user: req.user._id });
     if (!deleted) return res.status(404).json({ error: { message: "List not found" } });
 
-    await Movie.deleteMany({ list: id });
+    await Movie.deleteMany({ list: listId });
     res.status(204).send();
   } catch (err) {
     next(err);
